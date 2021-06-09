@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="description" content="konw your weather condition via your location">
+    <meta name="keywords" content="weather-app, weather, baher-essam, Baher Essam, baher-essam.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Weather app</title>
+</head>
+<body>
+    <!-- <div class="container ">
+        <a class="weather-notification">
+            <p>User permissin denied.</p>
+            <p>please, allow your location to get weather data</p>
+        </a> -->
+        <div id="zipCode">
+            <form action="" id="form">
+                <input type="number" id="zip" placeholder="Enter zip-code here">
+                <textarea name="" id="feeling" cols="30" rows="10"></textarea>
+                <button type="submit" id="generate">submit</button>
+            </form>
+        </div>
+        <div class="icon"></div>
+        <div class="location">
+            <h1 class="city">City</h1>
+            <span class="country"></span>
+        </div> 
+        <h1 class="degree">--</h1>
+        <p class="description"></p>
+        <p class="mood"></p>
+    </div>
+    
+    <script src="js/index.js"></script>
+</body>
+</html>
