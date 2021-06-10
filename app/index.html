@@ -12,28 +12,29 @@
     <title>Weather app</title>
 </head>
 <body>
-    <!-- <div class="container ">
-        <a class="weather-notification">
-            <p>User permissin denied.</p>
-            <p>please, allow your location to get weather data</p>
-        </a> -->
-        <div id="zipCode">
-            <form action="" id="form">
-                <input type="number" id="zip" placeholder="Enter zip-code here">
-                <textarea name="" id="feeling" cols="30" rows="10"></textarea>
-                <button type="submit" id="generate">submit</button>
-            </form>
+    <div class="container ">
+     
+        <div id="journal" class="holder entry hide show">
+            <div class="icon"></div>
+            <div class="location">
+                <h1 class="city">City</h1>
+                <span class="country"></span>
+            </div> 
+            <p id="date"></p>
+            <p id="name"></p>
+            <h1 class="degree">--</h1>
+            <p class="description"></p>
+            <p id="mood"></p>
         </div>
-        <div class="icon"></div>
-        <div class="location">
-            <h1 class="city">City</h1>
-            <span class="country"></span>
-        </div> 
-        <h1 class="degree">--</h1>
-        <p class="description"></p>
-        <p class="mood"></p>
+    </div>
+    <div id="zipCode">
+        <form action="" id="form">
+            <input type="number" id="zip" placeholder="Enter zip-code here">
+            <textarea name="" id="feeling" placeholder="Enter your feeeling here" cols="30" rows="5"></textarea>
+            <button type="submit" id="generate">submit</button>
+        </form>
     </div>
     
-    <script src="js/index.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>

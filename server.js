@@ -28,21 +28,23 @@ const server = app.listen(port, ()=>{
 
 //Require Express to run the server and routes
 // get all data by the : http://127.0.0.1:8000/getAll
-app.get('/getAll', function(req, res){
+app.get('/all', function(req, res){
   res.send(projectData).status(200).end();
 })
 
 
 // get all data by the : http://127.0.0.1:8000/postData
 app.post('/postData', (req, res)=> {
-  projectData= {
-    temp = req.body.temp,
-    date = req.body.date,
+  newEntry= {
+    name: req.body.name,
     icon: req.body.icon,
+    temp: req.body.temp,
     description: req.body.description,
-    userResponse = req.body.feelings,
+    date: req.body.date,
+    mood: req.body.mood,
   };
-  response.send(projectData).status(200).end();
+  projectData = newEntry;
+  res.send(projectData).status(200).end();
   console.log({message: 'POST Recieved'})
 });
 

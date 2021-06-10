@@ -37,4 +37,14 @@ img{
 form :is(input, button, textarea)
 {
     display: block;
+    width: 100%;
+    padding: 5px;
+    margin: 5px;
+    border: 0;
+    border-radius: 2px;
+    background-color: #ffffffde;
+}
+button{background-color: #fff !important;}
+.hide {
+    display: none;
 }
