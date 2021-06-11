@@ -45,6 +45,3 @@ form :is(input, button, textarea)
     background-color: #ffffffde;
 }
 button{background-color: #fff !important;}
-.hide {
-    display: none;
-}
