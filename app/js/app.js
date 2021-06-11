@@ -1,9 +1,9 @@
 // Create a new date instance dynamically with JS
-let d = new Date();
-let fullDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
+let day = new Date();
+let newDate = (day.getMonth() + 1) + '/'+ day.getDate()+'/'+ day.getFullYear();
 /* Global Variables */
-let baseUrl =`https://api.openweathermap.org/data/2.5/weather?zip=`;
-let key = '&appid=2b2ba16893949d7d46b3a88a0a0cbdf0';
+const baseUrl =`https://api.openweathermap.org/data/2.5/weather?zip=`;
+const apikey = '&appid=2b2ba16893949d7d46b3a88a0a0cbdf0&units=metric'; // Celcius
 //event listeners
 document.getElementById('form').addEventListener('submit', performAction);
 
@@ -19,13 +19,11 @@ function performAction (e) {
   else
     {
       // callback function to get data from the API
-      getWeatherData(baseUrl ,zipCode , key)
+      getWeatherData(baseUrl ,zipCode , apikey)
       .then(function (data) { 
         //adding POST request
-        postData('/add', {
-          date:fullDate,
-          city: data.name,
-          icon:data.weather[0].icon, 
+        postData('/addData', {
+          date:newDate,
           temp:data.main.temp,
           content:feelings,
         })
@@ -37,9 +35,9 @@ function performAction (e) {
     }
   };
 
-const getWeatherData = async (baseUrl , zipCode , key) => {
+const getWeatherData = async (baseUrl , zipCode , apikey) => {
    // 1.fetch the api url
-   const res = await fetch(baseUrl + zipCode + key)
+   const res = await fetch(baseUrl + zipCode + apikey)
      try {
        const data = await res.json();
        console.log(data)
@@ -63,7 +61,7 @@ const postData = async (url="", data = {}) => {
   });
   try {
       const newData = await response.json();
-      console.log(newData);
+      console.log('from post data', newData);
       return newData;
   } catch (error) {
             console.log("error", error);
@@ -72,17 +70,13 @@ const postData = async (url="", data = {}) => {
 
 // Update UI
 const updateUI = async () => {
-  //remove hide class form container to show recevied data 
-  document.getElementById('journal').classList.remove('hide');
   const request = await fetch('/all');
   try {
-    //set DOM elements for API to be shown at client side
       const allData = await request.json();
-      document.getElementById('date').textContent = `date : ${allData[0].date}`;
-      document.getElementById('temp').innerHTML =  (allData[0].temp - 273).toFixed(1)+ ` <span>C</span>`;
-      document.getElementById('content').textContent = `I'm feeling : ${allData[0].content}`;
-      document.getElementById('icon').innerHTML = `<img src="icons/${allData[0].icon}.svg">`;
-      document.getElementById('city').textContent= allData[0].city;
+      console.log('all data', allData);
+      document.getElementById('date').innerHTML = `Date: ${allData.date}`;
+      document.getElementById('temp').innerHTML =  `Temperature: ${allData.temp}`;
+      document.getElementById('content').innerHTML = `I feel: ${allData.content}`;
   } catch (error) {
             console.log("error", error);
   }

@@ -1,5 +1,5 @@
 // Setup empty JS object to act as endpoint for all routes
-projectData  = [];
+projectData  = {};
 
 //express to run server and route init
 const express = require('express');
@@ -31,21 +31,19 @@ const server = app.listen(port, ()=>{
 app.get('/all', function(req, res){
   res.send(projectData);
   //to clear data after every process
-  projectData  = [];
+  projectData  = {};
 })
 
 
-// get all data by the : http://127.0.0.1:8000/add
-app.post('/add', (req, res)=> {
-  console.log(req.body)
-  newEntry= {
-    date: req.body.date,
-    temp:req.body.temp,
-    content:req.body.content,
-    city: req.body.city,
-    icon: req.body.icon,
-  };
-  projectData.push(newEntry);
-  //res.send(projectData);
+// get all data by the : http://127.0.0.1:8000/addData
+app.post('/addData', addData);
+
+function addData(request, response){
+  let data = request.body;
+  console.log(data)
+  projectData["date"] = data.date;
+  projectData["temp"] = data.temp; // temperature
+  projectData["content"] = data.content; // user feeling
+  response.send(projectData);
   console.log({message: 'POST Recieved'})
-});
+}
