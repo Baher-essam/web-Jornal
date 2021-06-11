@@ -1,59 +1,48 @@
-/* Global Variables */
-const key = '&appid=2b2ba16893949d7d46b3a88a0a0cbdf0';
-const baseUrl =`https://api.openweathermap.org/data/2.5/weather?zip=`;
-const form =  document.getElementById('form');
-
-const feelings = document.querySelector('#feeling').value;
-const date = document.querySelector('#date');
-
 // Create a new date instance dynamically with JS
 let d = new Date();
-let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
-
-
+let fullDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
+/* Global Variables */
+let baseUrl =`https://api.openweathermap.org/data/2.5/weather?zip=`;
+let key = '&appid=2b2ba16893949d7d46b3a88a0a0cbdf0';
 //event listeners
-form.addEventListener('submit', performAction);
+document.getElementById('form').addEventListener('submit', performAction);
 
-
-//functions
+//main functions
 function performAction (e) {
   e.preventDefault();
-  let zipCode = document.getElementById('zip').value;
-  let url = baseUrl+ zipCode+  key;
+  const zipCode = document.getElementById('zip').value;
+  const feelings = document.querySelector('#feeling').value;
+  //to check if the user enterd any data
   if(!zipCode) 
     //if there is no data entered before submit show this alert
     alert('please enter your zip code!');
   else
     {
-      
+      // callback function to get data from the API
+      getWeatherData(baseUrl ,zipCode , key)
+      .then(function (data) { 
+        //adding POST request
+        postData('/add', {
+          date:fullDate,
+          city: data.name,
+          icon:data.weather[0].icon, 
+          temp:data.main.temp,
+          content:feelings,
+        })
+        //callback updateUI function to view data when submit
+        updateUI();
+       })
+      //to clear inputs after submitting
+      form.reset();
     }
-         // callback function to get data from the API
-         getWeatherData(url)
-         .then(function (projectData) { 
-           return projectData;
-          })
-         //to clear input numbers
-         form.reset();
   };
-let url = baseUrl + zipCode + key;
-const getWeatherData = async (url="") => {
+
+const getWeatherData = async (baseUrl , zipCode , key) => {
    // 1.fetch the api url
-   const res = await fetch(url)
-   // 2. Call Fake API
-     // const res = await fetch('/fakeAnimalData')
+   const res = await fetch(baseUrl + zipCode + key)
      try {
        const data = await res.json();
        console.log(data)
-        //Add data to post request
-        postData('/addWeather', {
-          name: data['name'], 
-          icon: data['weather'][0]['icon'], 
-          description: data['weather'][0]['description'],
-          temp: data['main']['temp'],
-          // country: data['sys'],
-        
-      }),
-      updateUI();
         return data;
      }  catch(error) {
        // appropriately handle the error
@@ -68,46 +57,33 @@ const postData = async (url="", data = {}) => {
        method: 'POST',
        credentials: 'same-origin',
        headers: {
-                  //  'Accept': 'application/json'
-                 'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
        },
        body: JSON.stringify(data) //Body data-type matches the 'Content-Type' header   
-  })
+  });
   try {
       const newData = await response.json();
       console.log(newData);
       return newData;
   } catch (error) {
-            console.log({message: 'Bad response recieved!'});
-            
+            console.log("error", error);
   }
 };
 
 // Update UI
 const updateUI = async () => {
+  //remove hide class form container to show recevied data 
   document.getElementById('journal').classList.remove('hide');
-  const feelings = document.querySelector('#feeling').value;
-  const response = await fetch('/all');
+  const request = await fetch('/all');
   try {
-          //set DOM elements for API to be shown at client side
-            const allData = await response.json();
-            const name = document.querySelector('#name');
-            const date = document.querySelector('#date');
-            const temp = document.querySelector('.degree');
-            const icon = document.querySelector('.icon');
-            const description = document.querySelector('.description');
-            const mood = document.querySelector('#mood');
-     
-            
-            name.textContent = allData.name;
-            temp.textContent = (allData.temp - 273).toFixed(1)+ ` <span>C</span>`;
-            description.textContent = allData.description;
-            date.textContent = allData.date = new Date().toDateString();
-            icon.innerHTML =`<img src="icons/${alldata.icon}.svg">`;
-            mood.innerHTML = feelings;
-            console.log(feelings)
-           
+    //set DOM elements for API to be shown at client side
+      const allData = await request.json();
+      document.getElementById('date').textContent = `date : ${allData[0].date}`;
+      document.getElementById('temp').innerHTML =  (allData[0].temp - 273).toFixed(1)+ ` <span>C</span>`;
+      document.getElementById('content').textContent = `I'm feeling : ${allData[0].content}`;
+      document.getElementById('icon').innerHTML = `<img src="icons/${allData[0].icon}.svg">`;
+      document.getElementById('city').textContent= allData[0].city;
   } catch (error) {
-            console.log({message: 'Invalid zipcode input!'}); 
+            console.log("error", error);
   }
 };
