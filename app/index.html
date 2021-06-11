@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <meta name="description" content="konw your weather condition via your location">
-    <meta name="keywords" content="weather-app, weather, baher-essam, Baher Essam, baher-essam.com">
+    <meta name="description" content="konw your weather condition via your zip code">
+    <meta name="keywords" content="weather-app, weather, udacity, weather-jornal">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
@@ -13,28 +13,25 @@
 </head>
 <body>
     <div class="container ">
-     
-        <div id="journal" class="holder entry hide show">
-            <div class="icon"></div>
-            <div class="location">
-                <h1 class="city">City</h1>
+        <div id="journal" class="hide">
+            <div id="icon"></div>
+            <!-- <div class="location">
+              
                 <span class="country"></span>
-            </div> 
+            </div>  -->
+            <h1 id="temp"></h1>
+            <h3 id="city"></h3>
             <p id="date"></p>
-            <p id="name"></p>
-            <h1 class="degree">--</h1>
-            <p class="description"></p>
-            <p id="mood"></p>
+            <p id="content"></p>
         </div>
     </div>
     <div id="zipCode">
         <form action="" id="form">
             <input type="number" id="zip" placeholder="Enter zip-code here">
-            <textarea name="" id="feeling" placeholder="Enter your feeeling here" cols="30" rows="5"></textarea>
+            <textarea name="" required id="feeling" placeholder="Enter your feeling here" cols="30" rows="5"></textarea>
             <button type="submit" id="generate">submit</button>
         </form>
     </div>
-    
     <script src="js/app.js"></script>
 </body>
 </html>
