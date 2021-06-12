@@ -40,7 +40,7 @@ const getWeatherData = async (baseUrl , zipCode , apikey) => {
    const res = await fetch(baseUrl + zipCode + apikey)
      try {
        const data = await res.json();
-       console.log(data)
+       console.log('res data', data)
         return data;
      }  catch(error) {
        // appropriately handle the error

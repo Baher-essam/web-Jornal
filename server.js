@@ -30,20 +30,17 @@ const server = app.listen(port, ()=>{
 // get all data by the : http://127.0.0.1:8000/all
 app.get('/all', function(req, res){
   res.send(projectData);
-  //to clear data after every process
-  projectData  = {};
 })
-
 
 // get all data by the : http://127.0.0.1:8000/addData
 app.post('/addData', addData);
 
 function addData(request, response){
   let data = request.body;
-  console.log(data)
+  console.log('server data site' , data)
   projectData["date"] = data.date;
   projectData["temp"] = data.temp; // temperature
   projectData["content"] = data.content; // user feeling
   response.send(projectData);
-  console.log({message: 'POST Recieved'})
+  console.log({message: 'POST Recieved'});
 }
